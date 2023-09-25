@@ -8,5 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     use HasFactory;
+    
     public $guarded = [];
+    // public function toArray():array
+    // {
+    //     return[
+    //         'path' => $this->path,
+
+    //     ];
+    // }
 }

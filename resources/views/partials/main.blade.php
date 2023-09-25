@@ -66,12 +66,12 @@
                         <label>Navigation</label>
                     </li>
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link "><span class="pcoded-micon"><i
+                        <a href="{{route('home')}}" class="nav-link "><span class="pcoded-micon"><i
                                     class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('clients') }}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Clients</span></a>
+                                    class="feather icon-user"></i></span><span class="pcoded-mtext">Clients</span></a>
                     </li>
 
                     <li class="nav-item">
@@ -86,7 +86,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('features') }}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Features</span></a>
+                                    class="feather icon-settings"></i></span><span class="pcoded-mtext">Features</span></a>
                     </li>
 
                 </ul>

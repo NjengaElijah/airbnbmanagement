@@ -28,7 +28,7 @@ class ClientsController extends Controller
         // dd("..");
         $request->validate(['first_name' => 'required', 'last_name' => 'required', 'phone' => 'required|numeric', 'email' => 'required|email']);
 
-        $client = Client::create(
+         Client::create(
             [
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -39,7 +39,7 @@ class ClientsController extends Controller
         );
         // dd($client->fresh());
         return back()->with([
-            'success' => 0,
+            'success' => 1,
             'msg' => 'client registered'
         ]);
 

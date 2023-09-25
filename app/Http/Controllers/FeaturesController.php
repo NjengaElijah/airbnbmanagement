@@ -11,7 +11,8 @@ class FeaturesController extends Controller
 
     public function index()
     {
-        $features = Feature::where(['deleted' => 0]);
+        $features = Feature::where(['deleted' => 0])->get();
+       
         return view('features.index',compact('features'));
     }
     public function create(Request $request)
@@ -45,7 +46,24 @@ class FeaturesController extends Controller
     public function edit()
     {
     }
-    public function delete()
+    public function delete($id,Request $request)
     {
+        $feature = Feature::find($id);
+
+        if ($request->isMethod('GET')) {
+
+            return view('partials.confirm', [
+                'action' => route('feature_delete',$id),
+                'body' => "Delete feature <b>".$feature->name."</b>",
+                'method' => 'DELETE'
+            ])->render();
+        }
+        // dd("..");
+        $feature->update(['deleted' => 1]);
+        return back()->with([
+            'success' => 0,
+            'msg' => 'feature deleted'
+        ]);
+
     }
 }

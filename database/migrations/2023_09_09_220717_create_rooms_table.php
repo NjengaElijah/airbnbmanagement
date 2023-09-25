@@ -15,11 +15,11 @@ return new class extends Migration {
             $table->string('name');
 
             $table->string('price_per_night');
+            $table->string('discounted_price');
             $table->string('no_guests');
-            
-            //one br, 2br and such
-            $table->foreignId('room_types_id')->nullable()
-                ->constrained('room_types');
+            $table->text('location')->nullable();
+            $table->text('coordinates')->nullable();
+
             //the whole body
             $table->text('description');
 

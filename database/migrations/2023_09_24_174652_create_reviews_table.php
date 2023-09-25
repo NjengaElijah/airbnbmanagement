@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('features', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->integer('type');
-            $table->integer('deleted')->default(0);
+            $table->string('comment')->nullable();
+            $table->float('review')->nullable();
+            $table->foreignId('user_id')->nullable()
+                ->constrained('users');
+
+            $table->foreignId('room_id')->nullable()
+                ->constrained('rooms');
+
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('features');
+        Schema::dropIfExists('reviews');
     }
 };

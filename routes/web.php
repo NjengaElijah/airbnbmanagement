@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::match(['GET', 'POST'], 'login', [AuthController::class, 'login'])->name('login');
+
 Route::middleware(RedirectIfAuthenticated::class)->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -43,16 +44,21 @@ Route::middleware(RedirectIfAuthenticated::class)->group(function () {
     //properties
     Route::group(['prefix' => 'properties'], function () {
         Route::get('', [PropertyController::class, 'index'])->name('properties');
+        Route::get('view/{id}', [PropertyController::class, 'view'])->name('property_view');
         Route::match(['GET', 'POST'], '/create', [PropertyController::class, 'create'])->name('property_add');
+        Route::match(['POST'], '/upload-image/{id}', [PropertyController::class, 'uploadImage'])->name('property_image_upload');
         Route::put('/edit/{id}', [PropertyController::class, 'edit'])->name('property_edit');
         Route::delete('/delete/{id}', [PropertyController::class, 'delete'])->name('property_delete');
+        Route::post('/assign-feature/{id}', [PropertyController::class, 'assignFeature'])->name('property_assign_feature');
+        Route::post('/de-assign-feature/{id}', [PropertyController::class, 'deAssignFeature'])->name('property_de_assign_feature');
+
     });
-    //properties
+    //features
     Route::group(['prefix' => 'features'], function () {
         Route::get('', [FeaturesController::class, 'index'])->name('features');
-        Route::match(['GET', 'POST'], '/create', [FeaturesController::class, 'create'])->name('feature_add');
+        Route::match(['GET', 'POST'], 'create', [FeaturesController::class, 'create'])->name('feature_add');
         Route::put('/edit/{id}', [FeaturesController::class, 'edit'])->name('feature_edit');
-        Route::delete('/delete/{id}', [FeaturesController::class, 'delete'])->name('feature_delete');
+        Route::match(['GET', 'DELETE'], 'delete/{id}', [FeaturesController::class, 'delete'])->name('feature_delete');
     });
-});
 
+});
