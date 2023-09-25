@@ -19,8 +19,9 @@ class Feature extends Model
     public function toArray()
     {
         return[
+            'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description
+            // 'description' => $this->description
         ];
     }
 

@@ -42,6 +42,11 @@ class LoginController extends Controller
         
         return response()->json($user->fresh(),"registered");
     }
+
+    public function profile():JsonResponse
+    {
+        return $this->success(auth()->user(),"profile");
+    }
     public function resetPassword()
     {}
 }

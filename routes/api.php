@@ -38,7 +38,10 @@ Route::group(['prefix' => 'properties'], function () {
 
 });
 Route::middleware('auth:api')->group(function () {
-
+    Route::group(['prefix' => 'auth'], function () {
+        Route::get('profile', [LoginController::class, 'profile'])
+            ->name('api_profile');
+    });
     Route::group(['prefix' => 'client'], function () {
 
         Route::get('bookings', [ClientsController::class, 'bookings'])->name('bookings');
