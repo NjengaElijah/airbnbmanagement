@@ -10,11 +10,15 @@ class Photo extends Model
     use HasFactory;
     
     public $guarded = [];
-    // public function toArray():array
-    // {
-    //     return[
-    //         'path' => $this->path,
+    public function uPath()
+    {
+        return "images/".$this->path;    }
+    public function toArray():array
+    {
+        return[
+                'id' => $this->id,
+            'path' => "images/".$this->path,
 
-    //     ];
-    // }
+        ];
+    }
 }

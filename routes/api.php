@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClientsController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\PropertyController;
 use Illuminate\Http\Request;
@@ -37,15 +38,27 @@ Route::group(['prefix' => 'properties'], function () {
 
 
 });
+Route::group(['prefix' => 'location'], function () {
+
+    Route::get('counties', [LocationController::class, 'counties'])->name('get_counties');
+    Route::get('county/{id}', [LocationController::class, 'county'])->name('get_county');
+
+
+});
+
+
 Route::middleware('auth:api')->group(function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::get('profile', [LoginController::class, 'profile'])
             ->name('api_profile');
+        Route::put('profile', [ClientsController::class, 'updateProfile'])
+            ->name('api_update_profile');
     });
     Route::group(['prefix' => 'client'], function () {
 
         Route::get('bookings', [ClientsController::class, 'bookings'])->name('bookings');
         Route::post('bookings', [ClientsController::class, 'addBooking'])->name('add_bookings');
+        Route::post('review', [ClientsController::class, 'addReview'])->name('add_review');
     });
 
 });

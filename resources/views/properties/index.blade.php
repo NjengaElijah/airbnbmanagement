@@ -12,7 +12,12 @@
                 <div class="card-columns mt-1">
                     @foreach ($rooms as $room)
                         <div class="card">
-                            <img class="card-img-top" src="https://a0.muscache.com/im/pictures/20d2a992-2e78-49c6-9ecd-173b0b66f6aa.jpg?im_w=720" alt="Card image cap">
+                            {{-- <img class="card-img-top" src="https://a0.muscache.com/im/pictures/20d2a992-2e78-49c6-9ecd-173b0b66f6aa.jpg?im_w=720" alt="Card image cap"> --}}
+                            @if($room->mainPhoto())
+                            <img class="card-img-top" src="{{$room->mainPhoto()->uPath()}}" alt="Card image cap">
+                            @else
+                            <div class="alert alert-danger">No Photo Uploaded</div>
+                            @endif                            
                             <div class="card-header">
                                 {{-- <button  is_modal="1" data-href="{{ route('feature_delete',$feature->id) }}" class="close" >x</button> --}}
                                 <h5>{{ $room->name }}</h5>

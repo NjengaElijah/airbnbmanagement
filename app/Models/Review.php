@@ -18,4 +18,11 @@ class Review extends Model
     {
         return $this->belongsTo(Room::class);
     }
+    public function toArray()
+    {
+        return[
+            'rating' => $this->rating,
+            'comment' => $this->comment,
+        ];
+    }
 }

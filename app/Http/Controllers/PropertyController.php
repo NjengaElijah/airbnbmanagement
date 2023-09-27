@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadImageRequest;
+use App\Models\Booking;
 use App\Models\Client;
 use App\Models\Feature;
 use App\Models\Photo;
@@ -89,6 +90,25 @@ class PropertyController extends Controller
         ]);
 
     }
+    public function deletePhoto($id,Request $request)
+    {
+       $photo = Photo::find($id);
+       
+        if ($request->isMethod('GET')) {
+
+            return view('partials.confirm', [
+                'action' => route('remove_image',$id),
+                'body' => "Delete feature <b>".$photo->name."</b>",
+                'method' => 'DELETE'
+            ])->render();
+        }
+       
+       $photo->delete();
+        return back()->with([
+            'success' => 1,
+            'msg' => 'photo deleted   '
+        ]);
+    }
     public function deAssignFeature($id, Request $request)
     {
         RoomFeature::where(['room_id' => $id, 'feature_id' => $request->feature_id])->delete();
@@ -101,24 +121,31 @@ class PropertyController extends Controller
     public function edit()
     {
     }
-    public function delete($id,Request $request)
+    public function delete($id, Request $request)
     {
-        $feature = Feature::find($id);
+        $property = Room::find($id);
 
         if ($request->isMethod('GET')) {
 
             return view('partials.confirm', [
-                'action' => route('feature_delete',$id),
-                'body' => "Delete feature <b>".$feature->name."</b>",
+                'action' => route('property_delete', $id),
+                'body' => "Delete property <b>" . $property->name . "</b>",
                 'method' => 'DELETE'
             ])->render();
         }
         // dd("..");
-        $feature->update(['deleted' => 1]);
-        return back()->with([
+        $property->update(['deleted' => 1]);
+        return redirect()->route('properties')->with([
             'success' => 0,
-            'msg' => 'feature deleted'
+            'msg' => 'property deleted'
         ]);
 
+    }
+    public function bookings(Request $request)
+    {
+        $bookings = Booking::all();
+
+
+        return view('properties.bookings.index',compact('bookings'));
     }
 }

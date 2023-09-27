@@ -29,4 +29,13 @@ class AuthController extends Controller
         ]);
 
     }
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        return redirect()->route('login')->with([
+            'success' => 1,
+            'msg' => 'Successfully signed out',
+        ]);
+    }
 }

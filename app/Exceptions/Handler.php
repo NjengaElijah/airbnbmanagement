@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
     }
    public function render( $request, Throwable $e)
     {
-        dd($e);
+
         if ($request->wantsJson()) {
             if ($e instanceof ModelNotFoundException) {
                 return $this->warning($e->getMessage(),ResponseCode::HTTP_NOT_FOUND);

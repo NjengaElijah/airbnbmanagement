@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Storage;
 
 class Room extends Model
 {
@@ -40,23 +39,21 @@ class Room extends Model
     }
     public function photos()
     {
-        $photos = $this->morphMany(Photo::class, 'photoable')->pluck('path')->toArray();
-        $p = [];
-
-        foreach($photos as $photo)
-        {
-            $p[] = (("/images/".$photo));
-        }
-        return $p;
+        return $this->morphMany(Photo::class, 'photoable')->get()->toArray();
+        
     }
-
+    public function mainPhoto() 
+    {
+        return ($this->photos()) ? $this->morphMany(Photo::class, 'photoable')->first() : null;
+    }
     public function reviews() : HasMany
     {
         return $this->hasMany(Review::class);
     }
     public function rating()
     {
-        return $this->reviews()->avg('review')??5;
+        $r = $this->reviews()->avg('rating')??5;
+        return round($r,2);
     }
     public function toArray()
     {
@@ -72,7 +69,7 @@ class Room extends Model
             'features' => $this->features()->where('type', Feature::FEATURE)->get(),
             'photos' => $this->photos(),
             'rating' => $this->rating(),
-            'reviews' => $this->reviews()
+            'reviews' => $this->reviews()->get()
         ];
     }
 }

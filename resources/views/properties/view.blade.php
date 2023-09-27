@@ -6,7 +6,8 @@
 
 @section('content')
     <div class=" p-1 ">
-        {{-- <button is_modal="1" data-href="{{ route('property_add') }}" class="btn btn-danger btn-sm">Add Rooms</button> --}}
+        <button is_modal="1" data-href="{{ route('property_delete',$property->id) }}" class="btn btn-danger btn-sm">Delete Property</button>
+        <hr>
 
         <div class="card-columns mt-1">
             <form class="card" action="{{ route('property_edit', $property->id) }}" method="post">
@@ -75,6 +76,15 @@
                             <input type="submit" class="btn btn-sm btn-info" value="Upload">
                         </div>
                     </form>
+                    <div class="row">   
+                        @foreach  ($property->photos() as $photo)
+                        
+                            <div class="d-inline  border border-secondary rounde shaddow p-2 m-2">  
+                            <img src="{{ $photo['path'] }}" alt="" class="d-block" style="max-width: 150px" >
+                            <a is_modal="1" class="text-danger " style="cursor:pointer"  data-href="{{route('remove_image',$photo['id'])}}">Remove </a>
+                            </div>
+                        @endforeach 
+                    </div>
                 </div>
             </div>
             <div class="card">

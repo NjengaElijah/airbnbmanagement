@@ -31,9 +31,9 @@ class Booking extends Model
     {
         return [
             'id' => $this->id,
-            'price_per_night' => $this->price_per_night,
-            'client' => $this->user()->get(),
-            'room' => $this->room()->get(),
+            'price_per_night' => $this->price_per_night??0,
+            'client' => $this->user,
+            'room' => $this->room,
             'no_of_adults' => $this->no_adults,
             'no_of_children' => $this->no_children,
             'start_date' => Carbon::parse($this->start_date)->format('Y-m-d H:i:s'),

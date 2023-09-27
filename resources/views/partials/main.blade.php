@@ -3,13 +3,10 @@
 
 <head>
     <title>{{ config('app.name') }}</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- Meta -->
+
+<base href="{{url('/')}}"/>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -41,7 +38,8 @@
                 <!-- logged in user -->
                 <div class="">
                     <div class="main-menu-header">
-                        <img class="img-radius" src="assets/images/user/avatar-2.jpg" alt="User-Profile-Image">
+                        <img class="img-radius" src=" {{ asset('assets/images/user/avatar-2.jpg') }} "
+                            alt="User-Profile-Image">
                         <div class="user-details">
                             <span>{{ auth()->user()->name }}</span>
                             <div id="more-details">{{ auth()->user()->type }}<i class="fa fa-chevron-down m-l-5"></i>
@@ -54,7 +52,7 @@
                                         class="feather icon-user m-r-5"></i>View Profile</a></li>
                             <li class="list-group-item"><a href="#!"><i
                                         class="feather icon-settings m-r-5"></i>Settings</a></li> --}}
-                            <li class="list-group-item"><a href="auth-normal-sign-in.html"><i
+                            <li class="list-group-item"><a href="{{route('logout')}}"><i
                                         class="feather icon-log-out m-r-5"></i>Logout</a></li>
                         </ul>
                     </div>
@@ -66,9 +64,21 @@
                         <label>Navigation</label>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('home')}}" class="nav-link "><span class="pcoded-micon"><i
+                        <a href="{{ route('home') }}" class="nav-link "><span class="pcoded-micon"><i
                                     class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('customers') }}" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-user"></i></span><span class="pcoded-mtext">Customers</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('property_bookings') }}" class="nav-link "><span class="pcoded-micon"><i
+                                    class="feather icon-check"></i></span><span class="pcoded-mtext">Bookings</span></a>
+                    </li>
+                    
+                    
                     <li class="nav-item">
                         <a href="{{ route('clients') }}" class="nav-link "><span class="pcoded-micon"><i
                                     class="feather icon-user"></i></span><span class="pcoded-mtext">Clients</span></a>
@@ -76,17 +86,20 @@
 
                     <li class="nav-item">
                         <a href="{{ route('apartments') }}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Apartments</span></a>
+                                    class="feather icon-home"></i></span><span
+                                class="pcoded-mtext">Apartments</span></a>
                     </li>
 
 
                     <li class="nav-item">
                         <a href="{{ route('properties') }}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-home"></i></span><span class="pcoded-mtext">Properties</span></a>
+                                    class="feather icon-home"></i></span><span
+                                class="pcoded-mtext">Properties</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('features') }}" class="nav-link "><span class="pcoded-micon"><i
-                                    class="feather icon-settings"></i></span><span class="pcoded-mtext">Features</span></a>
+                                    class="feather icon-settings"></i></span><span
+                                class="pcoded-mtext">Features</span></a>
                     </li>
 
                 </ul>
@@ -305,12 +318,12 @@
                                 </a>
                             </div>
                             <ul class="pro-body">
-                                <li><a href="user-profile.html" class="dropdown-item"><i
+                                {{-- <li><a href="user-profile.html" class="dropdown-item"><i
                                             class="feather icon-user"></i> Profile</a></li>
                                 <li><a href="email_inbox.html" class="dropdown-item"><i
-                                            class="feather icon-mail"></i> My Messages</a></li>
-                                <li><a href="auth-signin.html" class="dropdown-item"><i
-                                            class="feather icon-lock"></i> Lock Screen</a></li>
+                                            class="feather icon-mail"></i> My Messages</a></li> --}}
+                                <li><a href="{{route('logout')}}" class="dropdown-item"><i
+                                            class="feather icon-lock"></i> Log out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -321,7 +334,7 @@
 
     </header>
     <!-- [ Header ] end -->
-    @include('partials.notification');
+    @include('partials.notification')
 
     <div id="hand_modal" class='modal fade' {{-- data-bs-keyboard='false' data-bs-backdrop='static' --}} tabindex='-1'
         aria-labelledby='staticBackdropLabel' aria-hidden='true'>
@@ -336,12 +349,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">{{$pagename ?? ""}}</h5>
+                                <h5 class="m-b-10">{{ $pagename ?? '' }}</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i
                                             class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#!">{{$pagecramp??""}}</a></li>
+                                <li class="breadcrumb-item"><a href="#!">{{ $pagecramp ?? '' }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -357,7 +370,11 @@
     <!-- Warning Section start -->
 
     <!-- Warning Section Ends -->
-
+<style> 
+    .fixed-button.active{
+        display: none!important;
+    }
+</style>
     <!-- Required Js -->
     <script src="{{ asset('assets/js/vendor-all.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>

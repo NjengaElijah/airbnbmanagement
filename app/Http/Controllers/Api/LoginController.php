@@ -28,25 +28,27 @@ class LoginController extends Controller
 
         return $this->warning('Incorrect email or password');
     }
-    public function register(RegistrationRequest   $request) : JsonResponse
+    public function register(RegistrationRequest $request): JsonResponse
     {
-        User::findOrFail(130);
+
         $user = User::create(
-            ['name'=> $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'type' => User::TYPE['customer'],
-            'password'=> Hash::make($request->password)
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'type' => User::TYPE['customer'],
+                'password' => Hash::make($request->password)
             ]
         );
-        
-        return response()->json($user->fresh(),"registered");
+
+        return $this->success($user->fresh(), "registered");
     }
 
-    public function profile():JsonResponse
+    public function profile(): JsonResponse
     {
-        return $this->success(auth()->user(),"profile");
+        return $this->success(auth()->user(), "profile");
     }
     public function resetPassword()
-    {}
+    {
+    }
 }
